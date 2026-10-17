@@ -11,14 +11,16 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Check files structure
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install and Run Bot
+        env:
+          BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
         run: |
-          echo "=== ТЕКУЩАЯ ПАПКА ==="
-          pwd
-          echo "=== ЧТО НАХОДИТСЯ В КОРНЕ ==="
-          ls -la
-          echo "=== ЧТО НАХОДИТСЯ В ПОДПАПКАХ ==="
-          find . -maxdepth 3 -not -path '*/.*'
-          
+          npm install
+          npm start
           
           
