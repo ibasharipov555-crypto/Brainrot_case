@@ -15,13 +15,18 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 20
+          cache: 'npm'
 
-      - name: Force Run Bot
+      - name: Install dependencies
+        run: npm install
+
+      - name: Generate Prisma Client
+        run: npx prisma generate
+
+      - name: Build and Run Bot
         env:
           BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
         run: |
-          npm init -y
-          npm install telegraf dotenv node-telegram-bot-api
-          MAIN_FILE=$(find . -name "*.js" -not -path "*/node_modules/*" -not -path "*/.github/*" | head -n 1)
-          echo "Запускаем главный файл: $MAIN_FILE"
-          node "$MAIN_FILE"
+          npm run build --if-present
+          npm start
+          
