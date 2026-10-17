@@ -11,12 +11,14 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Install and Run Bot
-        env:
-          BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
+      - name: Check files structure
         run: |
-          cd Brainrot_case
-          npm install
-          npm start
+          echo "=== ТЕКУЩАЯ ПАПКА ==="
+          pwd
+          echo "=== ЧТО НАХОДИТСЯ В КОРНЕ ==="
+          ls -la
+          echo "=== ЧТО НАХОДИТСЯ В ПОДПАПКАХ ==="
+          find . -maxdepth 3 -not -path '*/.*'
+          
           
           
