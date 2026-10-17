@@ -7,6 +7,9 @@ on:
 jobs:
   run-bot:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./Brainrot_case
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -16,11 +19,13 @@ jobs:
         with:
           node-version: 20
 
-      - name: Install and Run Bot
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run Telegram Bot
         env:
           BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
-        run: |
-          npm install
-          npm start
+        run: npm start
+        
           
           
