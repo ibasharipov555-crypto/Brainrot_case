@@ -11,15 +11,10 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Find package.json and run
+      - name: Install and Run Bot
         env:
           BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
         run: |
-          TARGET_DIR=$(find . -name "package.json" -not -path "*/node_modules/*" -exec dirname {} \;)
-          echo "Found project folder at: $TARGET_DIR"
-          cd "$TARGET_DIR"
           npm install
           npm start
           
-        
-        
