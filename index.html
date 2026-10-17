@@ -53,3 +53,60 @@ function selectItem(id){selected=inventory.find(i=>String(i.id)===id);document.g
 function requestWithdraw(){let u=document.getElementById('username').value.trim();if(!selected){toast('Сначала выбери предмет в инвентаре');return}if(!u){toast('Введи имя пользователя Roblox');return}let el=document.getElementById('withdrawList');let card=document.createElement('div');card.className='notice';card.textContent='ТЕСТОВАЯ ЗАЯВКА · '+selected.name+' → '+u+' · Статус: не отправлена в игру';el.prepend(card);toast('Создана демонстрационная заявка')}
 update();renderInventory();
 </script></body></html>
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Админ-панель</title>
+    <!-- Подключаем скрипт Telegram -->
+    <script src="https://telegram.org"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: var(--tg-theme-bg-color, #ffffff);
+            color: var(--tg-theme-text-color, #000000);
+            padding: 20px;
+            text-align: center;
+        }
+        button {
+            background-color: var(--tg-theme-button-color, #2481cc);
+            color: var(--tg-theme-button-text-color, #ffffff);
+            border: none;
+            padding: 12px 20px;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            width: 100%;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h2>Панель управления игрой 🎮</h2>
+    <p id="welcome-text">Загрузка данных администратора...</p>
+    
+    <!-- Кнопки управления -->
+    <button onclick="sendAction('stats')">📊 Посмотреть статистику</button>
+    <button onclick="sendAction('gift')">🎁 Выдать бонус всем игрокам</button>
+    
+    <script>
+        // Инициализация Telegram Web App
+        const tg = window.Telegram.WebApp;
+        tg.expand(); // Разворачиваем на весь экран
+
+        // Проверяем пользователя
+        const user = tg.initDataUnsafe?.user;
+        if (user) {
+            document.getElementById('welcome-text').innerText = `Привет, ${user.first_name}!`;
+        }
+
+        // Функция отправки команды обратно в бота
+        function sendAction(actionType) {
+            const data = { action: actionType };
+            tg.sendData(JSON.stringify(data)); // Отправляет данные боту и закрывает мини-апп
+        }
+    </script>
+</body>
+</html>
+
