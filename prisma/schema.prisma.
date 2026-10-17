@@ -8,13 +8,16 @@ datasource db {
 }
 
 model Player {
-  id        String   @id @default(cuid())
-  telegramId String  @unique
-  username  String?
-  balance   Int      @default(1250)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  items     InventoryItem[]
+  id           String          @id @default(cuid())
+  telegramId   String          @unique
+  username     String?
+  balance      Int             @default(1250)
+  createdAt    DateTime        @default(now())
+  updatedAt    DateTime        @updatedAt
+  items        InventoryItem[]
+  transactions Transaction[]
+  openings     CaseOpening[]
+  withdrawals  Withdrawal[]
 }
 
 model InventoryItem {
@@ -32,4 +35,55 @@ model Transaction {
   amount    Int
   reason    String
   createdAt DateTime @default(now())
+  player    Player   @relation(fields: [playerId], references: [id])
+
+  @@index([playerId, createdAt])
+}
+
+model Case {
+  id        String       @id @default(cuid())
+  name      String       @unique
+  price     Int
+  active    Boolean      @default(true)
+  createdAt DateTime     @default(now())
+  drops     CaseDrop[]
+  openings  CaseOpening[]
+}
+
+model CaseDrop {
+  id        String   @id @default(cuid())
+  caseId    String
+  itemName  String
+  itemValue Int
+  chance    Float
+  case      Case     @relation(fields: [caseId], references: [id], onDelete: Cascade)
+
+  @@unique([caseId, itemName])
+}
+
+model CaseOpening {
+  id          String   @id @default(cuid())
+  playerId    String
+  caseId      String
+  itemName    String
+  itemValue   Int
+  pricePaid   Int
+  createdAt   DateTime @default(now())
+  player      Player   @relation(fields: [playerId], references: [id])
+  case        Case     @relation(fields: [caseId], references: [id])
+
+  @@index([playerId, createdAt])
+  @@index([caseId, createdAt])
+}
+
+model Withdrawal {
+  id        String   @id @default(cuid())
+  playerId  String
+  amount    Int
+  status    String   @default("PENDING")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  player    Player   @relation(fields: [playerId], references: [id])
+
+  @@index([status, createdAt])
 }
