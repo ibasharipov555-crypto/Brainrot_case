@@ -7,24 +7,17 @@ on:
 jobs:
   run-bot:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: .
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
-
       - name: Install dependencies
         run: npm install
+        working-directory: ${{ github.workspace }}
 
       - name: Run Telegram Bot
         env:
           BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
         run: npm start
-        
+        working-directory: ${{ github.workspace }}
         
