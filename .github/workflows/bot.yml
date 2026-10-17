@@ -16,13 +16,12 @@ jobs:
         with:
           node-version: 20
 
-      - name: Install and Run Bot
+      - name: Force Run Bot
         env:
           BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
         run: |
-          TARGET_DIR=$(find . -name "package.json" -not -path "*/node_modules/*" -exec dirname {} \;)
-          echo "Проект найден в папке: $TARGET_DIR"
-          cd "$TARGET_DIR"
-          npm install
-          npm start
-          
+          npm init -y
+          npm install telegraf dotenv node-telegram-bot-api
+          MAIN_FILE=$(find . -name "*.js" -not -path "*/node_modules/*" -not -path "*/.github/*" | head -n 1)
+          echo "Запускаем главный файл: $MAIN_FILE"
+          node "$MAIN_FILE"
