@@ -1,0 +1,35 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Player {
+  id        String   @id @default(cuid())
+  telegramId String  @unique
+  username  String?
+  balance   Int      @default(1250)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  items     InventoryItem[]
+}
+
+model InventoryItem {
+  id        String   @id @default(cuid())
+  playerId  String
+  name      String
+  value     Int
+  createdAt DateTime @default(now())
+  player    Player   @relation(fields: [playerId], references: [id])
+}
+
+model Transaction {
+  id        String   @id @default(cuid())
+  playerId  String
+  amount    Int
+  reason    String
+  createdAt DateTime @default(now())
+}
