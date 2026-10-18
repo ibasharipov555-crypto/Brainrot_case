@@ -3,298 +3,341 @@
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
 <meta name="theme-color" content="#080817">
-<title>Brainrot Battle — Case</title>
+<title>Brainrot Battle</title>
 <style>
-:root{--bg:#080817;--panel:#11122a;--purple:#8b35ff;--pink:#ff36d1;--cyan:#35eaff;--text:#fff;--muted:#a7a7cf;--gold:#ffda58}
+:root{--bg:#080817;--panel:#15152f;--line:#383064;--purple:#923bff;--pink:#ff39d4;--cyan:#39edff;--gold:#ffda60;--text:#fff;--muted:#aaa9cf}
 *{box-sizing:border-box}
-body{margin:0;background:radial-gradient(ellipse at 50% 0%,#30205d 0%,transparent 48%),var(--bg);color:var(--text);font-family:Arial,sans-serif;min-height:100vh}
+body{margin:0;background:radial-gradient(ellipse at top,#30205b,transparent 48%),var(--bg);color:var(--text);font-family:Arial,sans-serif;min-height:100vh}
 button{font:inherit;cursor:pointer;color:white;border:0}
 button:disabled{opacity:.45;cursor:not-allowed}
-.header{padding:22px 16px 16px;text-align:center;background:linear-gradient(180deg,#19123b,#0b0b20);border-bottom:1px solid #49318b}
-.logo{font-size:clamp(25px,6vw,39px);font-weight:1000;font-style:italic;letter-spacing:-1px}
-.logo span{color:var(--cyan)}
-.logo b{color:var(--pink)}
-.subtitle{color:var(--muted);font-size:12px;margin-top:7px}
-.balance{display:inline-flex;align-items:center;gap:9px;margin-top:15px;padding:11px 22px;border-radius:14px;border:1px solid #5544a0;background:#15152f;color:var(--gold);font-size:20px;font-weight:900}
-.wrap{max-width:900px;margin:auto;padding:15px 13px 105px}
-.nav{display:flex;gap:7px;overflow-x:auto;padding:7px;background:#101027;border:1px solid #30265d;border-radius:18px;margin-bottom:18px}
-.nav button{flex:1;min-width:82px;padding:13px 10px;border-radius:12px;background:transparent;color:var(--muted);font-weight:bold;white-space:nowrap}
-.nav button.active{color:white;background:linear-gradient(135deg,#7b28ff,#bb2bfa)}
-.page{display:none}
-.page.active{display:block;animation:appear .25s ease}
-@keyframes appear{from{opacity:0;transform:translateY(7px)}to{opacity:1;transform:translateY(0)}}
-.hero{overflow:hidden;text-align:center;border:1px solid #5737a6;border-radius:23px;padding:28px 18px;background:radial-gradient(ellipse at 50% 100%,#29216d,transparent 70%),linear-gradient(145deg,#151338,#10172e)}
-.hero h1{font-size:clamp(26px,6vw,40px);line-height:1.1;margin:12px 0}
-.gradient{background:linear-gradient(90deg,#ff50db,#a65bff,#32eaff);-webkit-background-clip:text;background-clip:text;color:transparent}
-.hero p{color:#c3c5eb;line-height:1.65;font-size:15px}
-.big-emoji{font-size:76px;margin:12px 0}
-.primary{background:linear-gradient(100deg,#7b2cff,#c22bfa);border-radius:12px;padding:15px 20px;font-weight:900}
-.primary:active{transform:scale(.97)}
+.header{text-align:center;padding:22px 12px 16px;background:#100e27;border-bottom:1px solid var(--line)}
+.logo{font-size:clamp(27px,7vw,39px);font-weight:1000;font-style:italic}
+.logo span{color:var(--pink)}.logo b{color:var(--cyan)}
+.subtitle{font-size:11px;color:var(--muted);margin-top:6px}
+.balance{display:inline-block;margin-top:13px;padding:11px 22px;background:#20203d;border:1px solid #57469b;border-radius:14px;color:var(--gold);font-size:20px;font-weight:bold}
+.wrap{max-width:900px;margin:auto;padding:14px 12px 100px}
+.nav{display:flex;gap:5px;overflow-x:auto;padding:6px;background:#111128;border:1px solid var(--line);border-radius:15px;margin-bottom:16px}
+.nav button{flex:1;min-width:75px;padding:12px 7px;border-radius:10px;background:transparent;color:var(--muted);font-size:12px;font-weight:bold}
+.nav button.active{background:linear-gradient(120deg,#702aff,#bd29f5);color:white}
+.page{display:none}.page.active{display:block}
+.hero,.panel,.case-card{background:linear-gradient(145deg,#1c193e,#111328);border:1px solid var(--line);border-radius:19px;padding:17px}
+.hero{text-align:center;padding:28px 17px;border-color:#6340a6}
+.hero h1{font-size:clamp(27px,7vw,40px);margin:12px 0}
+.hero p{color:#c7c4e7;line-height:1.6;font-size:14px}
+.big-emoji{font-size:76px;margin:16px}
+.gradient{background:linear-gradient(90deg,#ff48d5,#ad65ff,#35eaff);background-clip:text;color:transparent}
+.primary{background:linear-gradient(110deg,#762bff,#c02af5);border-radius:11px;padding:13px 15px;font-weight:bold}
+.secondary{background:#2b254b;border:1px solid #51417f;border-radius:10px;padding:11px}
 .full{width:100%}
-.section-title{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:23px 2px 12px}
+.cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.case-card{text-align:center;padding:13px 10px;overflow:hidden}
+.case-card .emoji{display:block;font-size:47px;margin:12px 0}
+.case-card h3{font-size:15px;margin:6px 0}
+.case-card p{font-size:11px;color:var(--muted);min-height:27px}
+.price{color:var(--gold);font-weight:bold;margin:12px 0}
+.case-card button{width:100%;padding:11px 3px;font-size:12px}
+.tag{display:inline-block;background:#35215d;color:#e4c5ff;border-radius:6px;padding:5px 7px;font-size:10px;font-weight:bold}
+.section-title{display:flex;justify-content:space-between;align-items:center;gap:8px;margin:21px 2px 12px}
 .section-title h2{font-size:19px;margin:0}
-.small{font-size:12px;color:var(--muted)}
-.cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
-.case-card,.panel{background:linear-gradient(145deg,#171735,#101226);border:1px solid #30285e;border-radius:17px;padding:15px}
-.case-card{text-align:center;overflow:hidden}
-.case-card .emoji{font-size:53px;margin:7px 0 12px;display:block}
-.case-card h3{margin:0 0 6px;font-size:16px}
-.case-card p{margin:0 0 13px;color:var(--muted);font-size:12px}
-.price{color:var(--gold);font-weight:900;margin-bottom:12px}
-.case-card .primary{width:100%;padding:12px 5px;font-size:13px}
-.tag{display:inline-block;border-radius:7px;padding:4px 7px;background:#31205c;color:#d9b6ff;font-size:10px;font-weight:bold}
-.bonus{margin-top:15px;padding:17px;border-radius:17px;background:linear-gradient(115deg,#21184c,#11152b);border:1px solid #5b358b}
-.bonus h3{margin:0 0 8px}
-.bonus p{margin:0 0 14px;color:var(--muted);font-size:13px}
-.bonus button{width:100%}
-.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin-top:15px}
-.stat{text-align:center;padding:14px 5px;background:#12132b;border:1px solid #30265b;border-radius:13px}
-.stat strong{display:block;font-size:20px;color:var(--cyan);margin-bottom:5px}
-.stat span{font-size:11px;color:var(--muted)}
-.empty{text-align:center;padding:32px 15px;color:var(--muted)}
-.empty .emoji{font-size:48px;display:block;margin-bottom:12px}
-.inventory-card{display:flex;align-items:center;gap:12px}
-.inventory-card .emoji{font-size:39px}
-.inventory-card .info{flex:1;min-width:0}
-.inventory-card h3{font-size:14px;margin:0 0 6px}
-.inventory-card p{font-size:11px;color:var(--muted);margin:5px 0 0}
-.inventory-card button{padding:9px 10px;border-radius:9px;background:#302050;font-size:12px}
-.rarity{font-size:10px;font-weight:bold;color:var(--cyan)}
-.modal{display:none;position:fixed;inset:0;z-index:20;background:#05050ddd;align-items:center;justify-content:center;padding:18px;backdrop-filter:blur(8px)}
+.small{font-size:12px;color:var(--muted);line-height:1.5}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin:13px 0}
+.stat{text-align:center;background:#14142d;border:1px solid var(--line);border-radius:12px;padding:12px 3px}
+.stat strong{display:block;font-size:20px;color:var(--cyan)}
+.stat span{font-size:10px;color:var(--muted)}
+.bonus{margin-top:14px}.bonus p{color:var(--muted);font-size:13px}
+.empty{text-align:center;padding:28px 10px;color:var(--muted);grid-column:1/-1}
+.item{display:flex;align-items:center;gap:9px;margin-bottom:9px}
+.item .emoji{font-size:37px}.item .info{flex:1;min-width:0}
+.item h3{font-size:13px;margin:0 0 5px;overflow-wrap:anywhere}
+.item p{font-size:11px;color:var(--muted);margin:0 0 4px}
+.item button{background:#332452;border-radius:8px;padding:9px;font-size:11px}
+.rarity{font-size:11px;color:var(--cyan)}
+.task{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.task .task-info{flex:1}.task h3{font-size:13px;margin:0 0 5px}.task p{font-size:11px;color:var(--muted);margin:0}
+.task button{background:#35205d;border-radius:8px;padding:10px;font-size:11px}
+.battle-box{text-align:center}.fighters{display:flex;align-items:center;gap:7px;margin:20px 0}
+.fighter{flex:1;min-width:0;padding:13px 4px;border-radius:12px;background:#111128;border:1px solid var(--line)}
+.fighter .emoji{font-size:42px;display:block;margin-bottom:8px}
+.fighter strong{font-size:12px;overflow-wrap:anywhere}
+.vs{font-weight:bold;color:var(--pink)}
+.modal{display:none;position:fixed;inset:0;z-index:20;background:#05050df0;align-items:center;justify-content:center;padding:16px}
 .modal.show{display:flex}
-.modal-box{width:100%;max-width:390px;text-align:center;padding:24px 19px;background:linear-gradient(150deg,#211746,#0e132a);border:1px solid #8242ff;border-radius:22px}
-.roulette{min-height:150px;display:flex;align-items:center;justify-content:center;font-size:90px}
-.roulette.spin{animation:spin .13s infinite alternate}
-@keyframes spin{from{transform:translateY(-5px) rotate(-7deg)}to{transform:translateY(5px) rotate(7deg)}}
-.result-name{font-size:23px;font-weight:900;margin:10px 0}
-.result-rarity{color:var(--cyan);margin-bottom:18px}
+.modal-box{width:100%;max-width:390px;text-align:center;padding:23px 17px;border-radius:20px;border:1px solid #8144ff;background:linear-gradient(145deg,#241747,#101329)}
+.roulette{font-size:83px;min-height:120px;display:flex;align-items:center;justify-content:center}
+.roulette.spin{animation:spin .12s infinite alternate}
+@keyframes spin{to{transform:translateY(6px) rotate(8deg)}}
+.result-name{font-size:22px;font-weight:bold;margin:9px 0}
+.result-rarity{color:var(--cyan);margin-bottom:17px;font-size:13px}
 .modal-actions{display:grid;gap:9px}
-.secondary{padding:13px;background:#29234d;border:1px solid #514083;border-radius:11px}
-.battle-box{text-align:center;padding:23px 16px}
-.battle-avatars{display:flex;align-items:center;justify-content:space-around;gap:10px;margin:25px 0}
-.fighter{flex:1;padding:15px 5px;border-radius:15px;background:#15152f;border:1px solid #42316d}
-.fighter .emoji{font-size:49px;display:block;margin-bottom:10px}
-.vs{font-weight:1000;color:var(--pink);font-size:22px}
-.battle-log{color:var(--muted);line-height:1.7;font-size:13px;min-height:40px}
-.task{display:flex;gap:12px;align-items:center;margin-bottom:10px}
-.task .task-info{flex:1}
-.task h3{font-size:14px;margin:0 0 5px}
-.task p{font-size:12px;color:var(--muted);margin:0}
-.task button{padding:10px;border-radius:9px;background:#35205d;font-size:12px}
-.footer{text-align:center;color:#66668f;font-size:11px;padding:20px 5px}
-.toast{position:fixed;z-index:40;bottom:95px;left:50%;transform:translateX(-50%);background:#252044;border:1px solid #7650d5;padding:12px 18px;border-radius:12px;display:none;width:max-content;max-width:90%;text-align:center;font-size:13px}
+.toast{display:none;position:fixed;bottom:82px;left:50%;transform:translateX(-50%);z-index:40;background:#29204b;border:1px solid #8052e0;border-radius:10px;padding:12px 16px;width:max-content;max-width:90%;text-align:center;font-size:13px}
 .toast.show{display:block}
-.bottom-nav{position:fixed;bottom:0;left:0;right:0;z-index:10;display:flex;justify-content:space-around;gap:3px;padding:9px 5px calc(9px + env(safe-area-inset-bottom));background:#0d0d20f5;border-top:1px solid #302459;backdrop-filter:blur(12px)}
-.bottom-nav button{background:transparent;color:#9f9cbe;font-size:10px;display:flex;flex-direction:column;align-items:center;gap:4px;min-width:0;flex:1;padding:3px}
-.bottom-nav button span{font-size:20px}
-.bottom-nav button.active{color:#d99cff}
-@media(min-width:600px){.cards{grid-template-columns:repeat(3,minmax(0,1fr))}.inventory-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.hero{padding:42px 30px}}
+.bottom-nav{position:fixed;bottom:0;left:0;right:0;z-index:10;display:flex;gap:2px;padding:8px 4px calc(8px + env(safe-area-inset-bottom));background:#0d0d20f5;border-top:1px solid var(--line)}
+.bottom-nav button{flex:1;background:transparent;color:var(--muted);font-size:10px;padding:3px;display:flex;flex-direction:column;align-items:center;gap:4px}
+.bottom-nav button span{font-size:19px}.bottom-nav button.active{color:#e0a0ff}
+.footer{text-align:center;color:#777497;font-size:10px;padding:20px 4px}
+@media(min-width:600px){.cards{grid-template-columns:repeat(3,minmax(0,1fr))}.hero{padding:38px}.inventory-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 </style>
 </head>
 <body>
 <header class="header">
-<div class="logo"><b>BRAINROT</b> <span>BATTLE</span></div>
-<div class="subtitle">СОБИРАЙ. ОТКРЫВАЙ. ПОБЕЖДАЙ.</div>
-<div class="balance">🪙 <span id="coins">1250</span> <small>монет</small></div>
+  <div class="logo"><b>BRAINROT</b> <span>BATTLE</span></div>
+  <div class="subtitle">СОБИРАЙ · ОТКРЫВАЙ · ПОБЕЖДАЙ</div>
+  <div class="balance">🪙 <span id="coins">1250</span> монет</div>
 </header>
+
 <div class="wrap">
 <nav class="nav">
-<button class="active" data-page="home">⌂ Главная</button>
-<button data-page="cases">▣ Кейсы</button>
-<button data-page="battle">⚔️ Битвы</button>
-<button data-page="inventory">🎒 Коллекция</button>
-<button data-page="tasks">🎁 Задания</button>
+  <button class="active" data-page="home">⌂ Главная</button>
+  <button data-page="cases">📦 Кейсы</button>
+  <button data-page="battle">⚔️ Битвы</button>
+  <button data-page="inventory">🎒 Коллекция</button>
+  <button data-page="tasks">🎁 Задания</button>
 </nav>
-<main>
+
 <section class="page active" id="home">
-<div class="hero">
-<span class="tag">🔥 BRAINROT UNIVERSE</span>
-<h1>Собери свою<br><span class="gradient">брейнрот-армию!</span></h1>
-<div class="big-emoji">🦈</div>
-<p>Открывай кейсы, собирай Secret и OG. Самые редкие OG находятся в дорогих кейсах!</p>
-<button class="primary full" onclick="showPage('cases')">ОТКРЫТЬ КЕЙСЫ →</button>
-</div>
-<div class="stats">
-<div class="stat"><strong id="statCount">0</strong><span>Персонажей</span></div>
-<div class="stat"><strong id="statUnique">0</strong><span>Уникальных</span></div>
-<div class="stat"><strong id="statPower">0</strong><span>Сила коллекции</span></div>
-</div>
-<div class="bonus">
-<h3>🎁 Ежедневный бонус</h3>
-<p id="bonusText">Забирай монеты каждый день.</p>
-<button class="primary" id="dailyButton" onclick="claimDaily()">Забрать +250 🪙</button>
-</div>
-<div class="section-title"><h2>🔥 Популярные кейсы</h2><button class="secondary" onclick="showPage('cases')">Все →</button></div>
-<div class="cards" id="featuredCases"></div>
+  <div class="hero">
+    <span class="tag">🔥 BRAINROT UNIVERSE</span>
+    <h1>Собери свою<br><span class="gradient">брейнрот-армию!</span></h1>
+    <div class="big-emoji">🦈</div>
+    <p>Открывай кейсы, собирай редких персонажей и охоться за секретными OG!</p>
+    <button class="primary full" onclick="showPage('cases')">ОТКРЫТЬ КЕЙСЫ →</button>
+  </div>
+  <div class="stats">
+    <div class="stat"><strong id="statCount">0</strong><span>Персонажей</span></div>
+    <div class="stat"><strong id="statUnique">0</strong><span>Уникальных</span></div>
+    <div class="stat"><strong id="statPower">0</strong><span>Сила</span></div>
+  </div>
+  <div class="panel bonus">
+    <h3>🎁 Ежедневный бонус</h3>
+    <p id="bonusText">Забирай 250 монет каждый день.</p>
+    <button class="primary full" id="dailyButton" onclick="claimDaily()">Забрать +250 🪙</button>
+  </div>
+  <div class="section-title"><h2>🔥 Популярные кейсы</h2><button class="secondary" onclick="showPage('cases')">Все →</button></div>
+  <div class="cards" id="featuredCases"></div>
 </section>
+
 <section class="page" id="cases">
-<div class="section-title"><h2>🎁 Магазин кейсов</h2></div>
-<p class="small">Персонажи Secret и OG. Шансы показаны в карточке каждого кейса.</p>
-<div class="cards" id="allCases"></div>
+  <div class="section-title"><h2>🎁 Магазин кейсов</h2></div>
+  <p class="small">В дорогих кейсах доступны секретные персонажи и OG.</p>
+  <div class="cards" id="allCases"></div>
 </section>
+
 <section class="page" id="inventory">
-<div class="section-title"><h2>🎒 Моя коллекция</h2><span class="small" id="inventoryCount">0 персонажей</span></div>
-<div class="cards inventory-grid" id="inventoryList"></div>
+  <div class="section-title"><h2>🎒 Моя коллекция</h2><span id="inventoryCount" class="small">0 персонажей</span></div>
+  <div class="cards inventory-grid" id="inventoryList"></div>
 </section>
+
 <section class="page" id="battle">
-<div class="panel battle-box">
-<span class="tag">⚔️ BATTLE ARENA</span><h2>Брейнрот-битва</h2>
-<p class="small">Выбери персонажа из коллекции или используй тестового бойца.</p>
-<div class="battle-avatars">
-<div class="fighter"><span class="emoji" id="myFighter">🦈</span><strong id="myFighterName">Твой боец</strong><p class="small" id="myPower">Сила: 10</p></div>
-<div class="vs">VS</div>
-<div class="fighter"><span class="emoji" id="enemyFighter">🐊</span><strong id="enemyName">Соперник</strong><p class="small" id="enemyPower">Сила: 10</p></div>
-</div>
-<p class="battle-log" id="battleLog">Готов к битве? Нажми на кнопку!</p>
-<button class="primary full" onclick="startBattle()">⚔️ НАЧАТЬ БИТВУ</button>
-<p class="small">Демо-битва на этом устройстве.</p>
-</div>
+  <div class="panel battle-box">
+    <span class="tag">⚔️ BATTLE ARENA</span>
+    <h2>Брейнрот-битва</h2>
+    <p class="small">Выбери бойца из своей коллекции и сразись с компьютерным соперником.</p>
+    <label class="small" for="fighterSelect">Твой персонаж</label>
+    <select id="fighterSelect" style="display:block;width:100%;margin:8px 0;padding:12px;background:#171735;color:white;border:1px solid #554080;border-radius:10px"></select>
+    <div class="fighters">
+      <div class="fighter"><span class="emoji" id="myFighter">🦈</span><strong id="myFighterName">Твой боец</strong><p id="myPower" class="small">Сила: 0</p></div>
+      <div class="vs">VS</div>
+      <div class="fighter"><span class="emoji" id="enemyFighter">🐊</span><strong id="enemyName">Соперник</strong><p id="enemyPower" class="small">Сила: 0</p></div>
+    </div>
+    <p class="small" id="battleLog">Добавь персонажа в коллекцию, чтобы начать битву.</p>
+    <button class="primary full" onclick="startBattle()">⚔️ НАЧАТЬ БИТВУ</button>
+    <p class="small">Это демо-битва против компьютера, не онлайн-мультиплеер.</p>
+  </div>
 </section>
+
 <section class="page" id="tasks">
-<div class="section-title"><h2>🏆 Задания</h2></div>
-<div class="panel task"><div style="font-size:30px">🎁</div><div class="task-info"><h3>Ежедневная награда</h3><p>Забери 250 монет</p></div><button id="taskDaily" onclick="claimDaily()">Забрать</button></div>
-<div class="panel task"><div style="font-size:30px">📦</div><div class="task-info"><h3>Первый кейс</h3><p>Открой кейс · +150 монет</p></div><button id="taskOpen" onclick="claimTask('open')">Забрать</button></div>
-<div class="panel task"><div style="font-size:30px">🦸</div><div class="task-info"><h3>Коллекционер</h3><p>Собери 3 персонажа · +200 монет</p></div><button id="taskCollect" onclick="claimTask('collect')">Забрать</button></div>
-<div class="panel task"><div style="font-size:30px">⚔️</div><div class="task-info"><h3>Первое сражение</h3><p>Заверши битву · +100 монет</p></div><button id="taskBattle" onclick="claimTask('battle')">Забрать</button></div>
+  <div class="section-title"><h2>🏆 Задания</h2></div>
+  <div class="panel task"><div style="font-size:27px">🎁</div><div class="task-info"><h3>Ежедневная награда</h3><p>Получи 250 монет</p></div><button id="taskDaily" onclick="claimDaily()">Забрать</button></div>
+  <div class="panel task"><div style="font-size:27px">📦</div><div class="task-info"><h3>Первый кейс</h3><p>Открой кейс · +150 монет</p></div><button id="taskOpen" onclick="claimTask('open')">Забрать</button></div>
+  <div class="panel task"><div style="font-size:27px">🦸</div><div class="task-info"><h3>Коллекционер</h3><p>Собери 3 персонажа · +200 монет</p></div><button id="taskCollect" onclick="claimTask('collect')">Забрать</button></div>
+  <div class="panel task"><div style="font-size:27px">⚔️</div><div class="task-info"><h3>Первое сражение</h3><p>Заверши битву · +100 монет</p></div><button id="taskBattle" onclick="claimTask('battle')">Забрать</button></div>
 </section>
-</main>
-<div class="footer">BRAINROT BATTLE · DEMO VERSION · Игровые монеты не имеют денежной стоимости.</div>
+
+<div class="footer">BRAINROT BATTLE · DEMO · Игровые монеты не имеют денежной стоимости.</div>
 </div>
+
 <nav class="bottom-nav">
-<button class="active" data-page="home"><span>⌂</span>Главная</button>
-<button data-page="cases"><span>📦</span>Кейсы</button>
-<button data-page="battle"><span>⚔️</span>Битвы</button>
-<button data-page="inventory"><span>🎒</span>Коллекция</button>
-<button data-page="tasks"><span>🎁</span>Задания</button>
+  <button class="active" data-page="home"><span>⌂</span>Главная</button>
+  <button data-page="cases"><span>📦</span>Кейсы</button>
+  <button data-page="battle"><span>⚔️</span>Битвы</button>
+  <button data-page="inventory"><span>🎒</span>Коллекция</button>
+  <button data-page="tasks"><span>🎁</span>Задания</button>
 </nav>
+
 <div class="modal" id="openModal">
-<div class="modal-box">
-<h2 id="modalTitle">Открытие кейса</h2><div class="roulette" id="roulette">📦</div>
-<div class="result-name" id="resultName">Удачи!</div><div class="result-rarity" id="resultRarity">Крутой персонаж ждёт тебя</div>
-<div class="modal-actions"><button class="primary" id="openAgain" onclick="openAgainAction()">ОТКРЫТЬ ЕЩЁ РАЗ</button><button class="secondary" onclick="closeModal()">ЗАКРЫТЬ</button></div>
-</div></div>
+  <div class="modal-box">
+    <h2 id="modalTitle">Открытие кейса</h2>
+    <div class="roulette" id="roulette">📦</div>
+    <div class="result-name" id="resultName">Удачи!</div>
+    <div class="result-rarity" id="resultRarity">Награда ждёт тебя</div>
+    <div class="modal-actions">
+      <button class="primary" id="openAgain" onclick="openAgainAction()">ОТКРЫТЬ ЕЩЁ РАЗ</button>
+      <button class="secondary" onclick="closeModal()">ЗАКРЫТЬ</button>
+    </div>
+  </div>
+</div>
 <div class="toast" id="toast"></div>
+
 <script>
-const CASES=[
-{id:'secret',name:'Secret',emoji:'🌀',price:499,description:'Начни охоту за Secret',color:'#ff4f83',items:[
-['Tralalero Tralala','🦈','Secret',100,55],['Bombardiro Crocodilo','🐊','Secret',120,30],['Tung Tung Tung Sahur','🪵','Secret',150,14],['Los Tralaleritos','🦈','Secret',220,1]]},
-{id:'brainrot',name:'Brainrot',emoji:'💎',price:999,description:'Более редкие Secret',color:'#35eaff',items:[
-['Tralalero Tralala','🦈','Secret',160,40],['Bombardiro Crocodilo','🐊','Secret',220,30],['La Vaca Saturno Saturnita','🐮','Secret',350,20],['Los Tralaleritos','🦈','Secret',600,10]]},
-{id:'celestial',name:'Celestial',emoji:'🌌',price:2499,description:'Сверхредкие персонажи',color:'#b74cff',items:[
-['La Vaca Saturno Saturnita','🐮','Secret',450,35],['Los Tralaleritos','🦈','Secret',700,30],['Graipuss Medussi','🪼','Secret',1000,25],['Strawberry Elephant','🐘','OG',5000,10]]},
-{id:'mythic',name:'Mythic',emoji:'👑',price:4999,description:'Шанс на OG',color:'#ffbd48',items:[
-['Los Tralaleritos','🦈','Secret',800,35],['Graipuss Medussi','🪼','Secret',1200,30],['Strawberry Elephant','🐘','OG',6000,25],['Meowl','🐱','OG',9000,10]]},
-{id:'og',name:'OG Vault',emoji:'💠',price:9999,description:'Охота за OG',color:'#ff36d1',items:[
-['Strawberry Elephant','🐘','OG',10000,45],['Meowl','🐱','OG',15000,30],['Skibidi Toilet','🚽','OG',20000,20],['The Great Pumpkin','🎃','OG',50000,5]]},
-{id:'ultraog',name:'Ultra OG',emoji:'🏆',price:19999,description:'Самые редкие OG',color:'#ffda58',items:[
-['Meowl','🐱','OG',20000,35],['Skibidi Toilet','🚽','OG',30000,30],['The Great Pumpkin','🎃','OG',60000,25],['Strawberry Elephant','🐘','OG',100000,10]]}
+'use strict';
+
+const CASES = [
+ {id:'basic',name:'Обычный',emoji:'📦',price:100,desc:'Начало коллекции',items:[
+  ['Tralalero Tralala','🦈','Обычный',10,50],['Bombardiro Crocodilo','🐊','Обычный',15,30],['Tung Tung Tung Sahur','🪵','Редкий',25,15],['Ballerina Cappuccina','☕','Эпический',40,5]]},
+ {id:'rare',name:'Редкий',emoji:'💎',price:250,desc:'Больше редких наград',items:[
+  ['Tralalero Tralala','🦈','Обычный',15,30],['Bombardiro Crocodilo','🐊','Редкий',30,30],['Chimpanzini Bananini','🍌','Эпический',55,25],['Trippi Troppi','🦐','Легендарный',100,15]]},
+ {id:'epic',name:'Эпический',emoji:'🔮',price:500,desc:'Для коллекционеров',items:[
+  ['Bombardiro Crocodilo','🐊','Редкий',40,25],['Ballerina Cappuccina','☕','Эпический',65,30],['Chimpanzini Bananini','🍌','Легендарный',120,25],['Tralalero Tralala','🦈','Мифический',200,20]]},
+ {id:'legend',name:'Легендарный',emoji:'👑',price:1000,desc:'Мощные персонажи',items:[
+  ['Chimpanzini Bananini','🍌','Легендарный',150,35],['Tralalero Tralala','🦈','Мифический',250,30],['Tung Tung Tung Sahur','🪵','Мифический',300,25],['La Vaca Saturno Saturnita','🐄','Секретный',500,10]]},
+ {id:'myth',name:'Мифический',emoji:'🌌',price:2000,desc:'Охота за секретами',items:[
+  ['Tralalero Tralala','🦈','Мифический',300,35],['La Vaca Saturno Saturnita','🐄','Секретный',600,30],['Graipuss Medussi','🐱','Секретный',800,25],['Torrtuginni Dragonfrutini','🐢','OG',1800,10]]},
+ {id:'secret',name:'Секретный',emoji:'🌀',price:5000,desc:'Секретные и OG',items:[
+  ['La Vaca Saturno Saturnita','🐄','Секретный',900,35],['Graipuss Medussi','🐱','Секретный',1200,30],['Torrtuginni Dragonfrutini','🐢','OG',2500,25],['Strawberry Elephant','🐘','OG',5000,10]]},
+ {id:'og',name:'OG',emoji:'👑',price:10000,desc:'Самые редкие OG',items:[
+  ['Torrtuginni Dragonfrutini','🐢','OG',4000,45],['Strawberry Elephant','🐘','OG',7000,35],['Meowl','🐱','OG',10000,20]]}
 ];
-const DEFAULT_STATE={coins:1250,inventory:[],lastDaily:'',opened:0,battles:0,claimed:[],nextId:1};
-let state=loadState(),pendingCase=null,isOpening=false,toastTimer=null;
+
+const DEFAULT={coins:1250,inventory:[],lastDaily:'',opened:0,battles:0,claimed:[],nextId:1};
+let state=loadState(),pendingCase=null,isOpening=false,spinTimer=null,toastTimer=null;
+
 function loadState(){
- try{const s=JSON.parse(localStorage.getItem('brainrotBattleSave'));if(s&&typeof s.coins==='number')return {...DEFAULT_STATE,...s};}catch(e){}
- return {...DEFAULT_STATE};
+ try{
+  const s=JSON.parse(localStorage.getItem('brainrotBattleSave'));
+  if(s&&typeof s.coins==='number'&&Array.isArray(s.inventory))return {...DEFAULT,...s};
+ }catch(e){}
+ return {...DEFAULT,inventory:[],claimed:[]};
 }
-function saveState(){try{localStorage.setItem('brainrotBattleSave',JSON.stringify(state));}catch(e){}}
-function money(n){return Number(n).toLocaleString('ru-RU')}
-function showToast(msg){const el=document.getElementById('toast');el.textContent=msg;el.classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>el.classList.remove('show'),2400)}
+function saveState(){
+ try{localStorage.setItem('brainrotBattleSave',JSON.stringify(state));}
+ catch(e){showToast('Не удалось сохранить прогресс на устройстве');}
+}
+function money(n){return Number(n).toLocaleString('ru-RU');}
+function showToast(message){
+ const el=document.getElementById('toast');
+ el.textContent=message;el.classList.add('show');
+ clearTimeout(toastTimer);toastTimer=setTimeout(()=>el.classList.remove('show'),2400);
+}
 function showPage(id){
  document.querySelectorAll('.page').forEach(p=>p.classList.toggle('active',p.id===id));
  document.querySelectorAll('[data-page]').forEach(b=>b.classList.toggle('active',b.dataset.page===id));
+ if(id==='battle')updateFighter();
  window.scrollTo({top:0,behavior:'smooth'});
 }
 document.querySelectorAll('[data-page]').forEach(b=>b.addEventListener('click',()=>showPage(b.dataset.page)));
+
 function caseCard(c){
- const chances=c.items.map(x=>`${x[0]} — ${x[4]}%`).join('<br>');
- return `<div class="case-card" style="border-color:${c.color}66">
+ return `<div class="case-card" style="border-color:${c.id==='og'?'#ffda60':'#493674'}">
  <span class="tag">${c.name.toUpperCase()}</span><span class="emoji">${c.emoji}</span>
- <h3>${c.name} кейс</h3><p>${c.description}</p><div class="price">🪙 ${money(c.price)}</div>
- <details style="text-align:left;font-size:11px;color:var(--muted);margin-bottom:12px"><summary style="cursor:pointer;margin-bottom:7px">Шансы выпадения</summary>${chances}</details>
+ <h3>${c.name} кейс</h3><p>${c.desc}</p><div class="price">🪙 ${money(c.price)}</div>
  <button class="primary" onclick="openCase('${c.id}')">ОТКРЫТЬ</button></div>`;
 }
 function renderCases(){
  document.getElementById('featuredCases').innerHTML=CASES.slice(0,2).map(caseCard).join('');
  document.getElementById('allCases').innerHTML=CASES.map(caseCard).join('');
 }
-function sellPrice(item){return Math.max(1,Math.floor(item.value*.5))}
-function renderInventory(){
- const el=document.getElementById('inventoryList');
- if(!state.inventory.length){
-  el.innerHTML=`<div class="panel empty" style="grid-column:1/-1"><span class="emoji">🎒</span><strong>Коллекция пока пуста</strong><p>Открой первый кейс!</p><button class="primary" onclick="showPage('cases')">К кейсам</button></div>`;
-  return;
- }
- el.innerHTML=state.inventory.map(item=>`<div class="panel inventory-card"><span class="emoji">${item.emoji}</span><div class="info"><h3>${item.name}</h3><div class="rarity">${item.rarity} · Сила ${item.power}</div><p>Продажа: 🪙 ${money(sellPrice(item))}</p></div><button onclick="sellItem(${item.id})">Продать</button></div>`).join('');
-}
-function update(){
- document.getElementById('coins').textContent=money(state.coins);
- document.getElementById('statCount').textContent=state.inventory.length;
- document.getElementById('statUnique').textContent=new Set(state.inventory.map(x=>x.name)).size;
- document.getElementById('statPower').textContent=state.inventory.reduce((a,x)=>a+x.power,0);
- document.getElementById('inventoryCount').textContent=state.inventory.length+' персонажей';
- const today=new Date().toDateString(),daily=state.lastDaily===today;
- document.getElementById('dailyButton').disabled=daily;
- document.getElementById('dailyButton').textContent=daily?'✅ Уже получено сегодня':'Забрать +250 🪙';
- document.getElementById('bonusText').textContent=daily?'Возвращайся завтра за новой наградой.':'Забирай монеты каждый день и открывай кейсы.';
- document.getElementById('taskDaily').textContent=daily?'Готово':'Забрать';
- document.getElementById('taskDaily').disabled=daily;
- for(const [id,key] of [['taskOpen','open'],['taskCollect','collect'],['taskBattle','battle']]){
-  document.getElementById(id).textContent=state.claimed.includes(key)?'Готово':'Забрать';
-  document.getElementById(id).disabled=state.claimed.includes(key);
- }
- renderInventory();saveState();
-}
 function weightedItem(items){
- const total=items.reduce((sum,x)=>sum+x[4],0);
+ const total=items.reduce((sum,item)=>sum+item[4],0);
  let roll=Math.random()*total;
- for(const item of items){roll-=item[4];if(roll<0)return item}
+ for(const item of items){roll-=item[4];if(roll<0)return item;}
  return items[items.length-1];
 }
 function openCase(id){
  if(isOpening)return;
- const c=CASES.find(x=>x.id===id);if(!c)return;
- if(state.coins<c.price){showToast('Не хватает монет! Забери ежедневный бонус.');return}
- state.coins-=c.price;saveState();update();pendingCase=c;isOpening=true;
- document.getElementById('modalTitle').textContent='Открытие: '+c.name;
- document.getElementById('resultName').textContent='Крутись...';
+ const c=CASES.find(x=>x.id===id);
+ if(!c)return;
+ if(state.coins<c.price){showToast('Не хватает монет! Забери ежедневный бонус.');return;}
+ state.coins-=c.price;
+ pendingCase=c;isOpening=true;saveState();update();
+ document.getElementById('modalTitle').textContent=c.name+' кейс';
+ document.getElementById('roulette').textContent=c.emoji;
+ document.getElementById('roulette').classList.add('spin');
+ document.getElementById('resultName').textContent='Открываем...';
  document.getElementById('resultRarity').textContent='Удачи!';
  document.getElementById('openAgain').disabled=true;
- document.getElementById('roulette').classList.add('spin');
  document.getElementById('openModal').classList.add('show');
+ const symbols=c.items.map(x=>x[1]);
  let ticks=0;
- const timer=setInterval(()=>{
-  document.getElementById('roulette').textContent=c.items[Math.floor(Math.random()*c.items.length)][1];
+ clearInterval(spinTimer);
+ spinTimer=setInterval(()=>{
+  document.getElementById('roulette').textContent=symbols[Math.floor(Math.random()*symbols.length)];
   ticks++;
   if(ticks>=18){
-   clearInterval(timer);
-   const win=weightedItem(c.items);
-   const item={id:state.nextId++,name:win[0],emoji:win[1],rarity:win[2],power:win[3],value:win[3]};
-   state.inventory.push(item);state.opened++;
+   clearInterval(spinTimer);spinTimer=null;
+   const item=weightedItem(c.items);
+   const reward={id:state.nextId++,name:item[0],emoji:item[1],rarity:item[2],power:item[3],sell:Math.max(1,Math.floor(c.price*.45))};
+   state.inventory.push(reward);state.opened++;
    document.getElementById('roulette').classList.remove('spin');
-   document.getElementById('roulette').textContent=win[1];
-   document.getElementById('resultName').textContent=win[0];
-   document.getElementById('resultRarity').textContent=win[2]+' · Сила '+win[3];
-   document.getElementById('openAgain').disabled=false;isOpening=false;
-   update();showToast('Выпал '+win[0]+'!');
+   document.getElementById('roulette').textContent=reward.emoji;
+   document.getElementById('resultName').textContent=reward.name;
+   document.getElementById('resultRarity').textContent='Редкость: '+reward.rarity+' · Сила: '+reward.power;
+   document.getElementById('openAgain').disabled=false;
+   isOpening=false;update();
+   showToast('Получен персонаж: '+reward.name+'!');
   }
- },95);
+ },100);
 }
-function openAgainAction(){if(pendingCase&&!isOpening){const id=pendingCase.id;closeModal();openCase(id)}}
-function closeModal(){document.getElementById('openModal').classList.remove('show');document.getElementById('roulette').classList.remove('spin');isOpening=false}
+function openAgainAction(){
+ if(pendingCase&&!isOpening){const id=pendingCase.id;closeModal();openCase(id);}
+}
+function closeModal(){
+ if(isOpening)return;
+ document.getElementById('openModal').classList.remove('show');
+ document.getElementById('roulette').classList.remove('spin');
+}
+function sellPrice(item){return item.sell||Math.max(1,item.power*3);}
 function sellItem(id){
- const i=state.inventory.findIndex(x=>x.id===id);if(i<0)return;
- const item=state.inventory[i],price=sellPrice(item);
- state.coins+=price;state.inventory.splice(i,1);update();showToast('Продано за '+money(price)+' монет');
+ const index=state.inventory.findIndex(x=>x.id===id);
+ if(index<0)return;
+ const item=state.inventory[index],price=sellPrice(item);
+ state.coins+=price;state.inventory.splice(index,1);
+ update();showToast('Продан '+item.name+' за '+money(price)+' монет');
 }
 function claimDaily(){
  const today=new Date().toDateString();
- if(state.lastDaily===today){showToast('Бонус уже получен сегодня');return}
- state.lastDaily=today;state.coins+=250;update();showToast('+250 монет!');
+ if(state.lastDaily===today){showToast('Бонус уже получен сегодня');return;}
+ state.lastDaily=today;state.coins+=250;update();showToast('Получено +250 монет!');
 }
-function claimTask(key){
- if(state.claimed.includes(key)){showToast('Задание уже получено');return}
- let reward=0;
- if(key==='open'&&state.opened>=1)reward=150;
- else if(key==='collect'&&state.inventory.length>=3)reward=200;
- else if(key==='battle'&&state.battles>=1)rewa  
+function claimTask(id){
+ if(state.claimed.includes(id)){showToast('Это задание уже выполнено');return;}
+ let reward=0,ready=false;
+ if(id==='open'){ready=state.opened>=1;reward=150;}
+ if(id==='collect'){ready=state.inventory.length>=3;reward=200;}
+ if(id==='battle'){ready=state.battles>=1;reward=100;}
+ if(!ready){showToast('Сначала выполни задание');return;}
+ state.claimed.push(id);state.coins+=reward;update();showToast('Награда: +'+reward+' монет!');
+}
+function updateFighter(){
+ const select=document.getElementById('fighterSelect');
+ const old=select.value;
+ if(!state.inventory.length){
+  select.innerHTML='<option value="">Нет персонажей — открой кейс</option>';
+  document.getElementById('myFighter').textContent='❔';
+  document.getElementById('myFighterName').textContent='Нет бойца';
+  document.getElementById('myPower').textContent='Сила: 0';
+  return;
+ }
+ select.innerHTML=state.inventory.map(x=>`<option value="${x.id}">${x.emoji} ${x.name} · ${x.power}</option>`).join('');
+ if(state.inventory.some(x=>String(x.id)===old))select.value=old;
+ const fighter=state.inventory.find(x=>String(x.id)===select.value)||state.inventory[0];
+ document.getElementById('myFighter').textContent=fighter.emoji;
+ document.getElementById('myFighterName').textContent=fighter.name;
+ document.getElementById('myPower').textContent='Сила: '+fighter.power;
+}
+document.getElementById('fighterSelect').addEventListener('change',updateFighter);
+function startBattle(){
+ if(!state.inventory.length){showToast('Сначала открой кейс и получи персонажа');return;}
+ const chosen=state.inventory.find(x=>String(x.id)===document.getElementById('fighterSelect').value)||state.inventory[0];
+ const enemies=[
+  {name:'Bombardiro Crocodilo',emoji:'🐊',power:20},
+  {name:'Tung Tung Tung Sahur',emoji:'🪵',power:40},
+  {name:'Chimpanzini Bananini',emoji:'🍌',power:80},
+  {name:'Strawberry Elephant',emoji:'🐘',power:150}
+ ];
+ const enemy=enemies[Math.floor(Math.random()*enemies.length)];
+ document.getElementById('enemyFighter').textContent=enemy.emoji;
+ document.getElementById('enemyName').textContent=enemy.name;
+ document.getElementById('enemyPower').textContent='Сила: '+enemy.power;
+ const myScore=cho
